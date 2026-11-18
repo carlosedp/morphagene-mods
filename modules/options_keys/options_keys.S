@@ -18,6 +18,8 @@
 @              (default 0 = stock)
 @   mono 0-2   mono input: 1 copies the left input onto the right, 2 does it
 @              only while R in is quiet (auto) (default 0; modules/mono_in)
+@   thru 0|1   Organize fully clockwise plays the reel through, splice after
+@              splice (default 1; modules/splice_thru)
 @ Parser hook: the stock loop reads each line into fp and dispatches on the
 @ key at 0x08023326; ours is checked first. Writer hook: the firmware recreates
 @ options.txt (stock keys + comments) after parsing; we append our keys before
@@ -26,7 +28,8 @@
 @ +7 mono, +8 cpul, +9 mcap, +10 sldm, +11 root, +12 tlen, +13 ingn (the
 @ saved gain), +14 applied at boot (0/1), +15 pending gain + 1 (0 = none).
 @ The block is full, so scal lives at SCALE: a u16 mask, bit d = d semitones
-@ (bits 1-11), reset to 0 every boot by sd_updater.
+@ (bits 1-11), reset to 0 every boot by sd_updater. thru is a byte at THRU,
+@ set to 1 every boot by sd_updater.
 @
 @ Main-loop hook (opt_main, 0x08023ee6): the request dispatcher's test of
 @ flag 0x80 (rewrite options.txt), reached only when no other card request is
@@ -57,6 +60,8 @@
     .equ KEY_INGN,       0x6e676e69     @ "ingn"
     .equ KEY_SCAL,       0x6c616373     @ "scal"
     .equ KEY_MONO,       0x6f6e6f6d     @ "mono"
+    .equ KEY_THRU,       0x75726874     @ "thru"
+    .equ THRU,           0x2002A606     @ thru (splice_thru), u8
     .equ SCALE,          0x2002A604     @ scal mask (u16)
     .equ GAIN,           0x20001068     @ stock input-gain index 0-3
     .equ SET_GAIN,       0x080257dd     @ stock: codec line-in volume = 0x13 + 4 * gain
@@ -116,6 +121,9 @@ opt_parse:
     ldr     r1, =KEY_MONO
     cmp     r0, r1
     beq     6f
+    ldr     r1, =KEY_THRU
+    cmp     r0, r1
+    beq     40f
     ldrb.w  ip, [fp, #1]                @ replaced instruction: stock keys
     b.w     PARSE_STOCK
 8:  adds    r2, r2, #9                  @ mcap -> +9, digits 0-9
@@ -136,6 +144,8 @@ opt_parse:
 6:  adds    r2, r2, #7                  @ mono -> +7, digits 0-2
     movs    r3, #2
     b       9f
+40: ldr     r2, =THRU                   @ thru -> THRU, 0 or 1
+    b       3f
 17: adds    r2, r2, #13                 @ ingn -> +13, digits 0-3
     movs    r3, #3
     b       9f
@@ -350,6 +360,18 @@ opt_write:
     ldr     r1, =fmt_mono
     ldr     r3, =F_PRINTF
     blx     r3
+    ldr     r2, =THRU                   @ thru (default 1 without settings)
+    ldrb    r2, [r2]
+    ldr     r3, =SETTINGS
+    ldr     r0, [r3]
+    ldr     r1, =SETTINGS_MAGIC
+    cmp     r0, r1
+    it      ne
+    movne   r2, #1
+    addw    r0, sp, #1396
+    ldr     r1, =fmt_thru
+    ldr     r3, =F_PRINTF
+    blx     r3
     addw    r0, sp, #1396               @ replaced: f_close(options.txt)
     ldr     r3, =F_CLOSE
     blx     r3
@@ -460,4 +482,6 @@ fmt_tlen: .asciz "tlen %d //Turing loop length in steps, 1-16\n"
 fmt_ingn: .asciz "ingn %d //Input gain 0-3 (REC held + SHIFT taps); saved automatically a few seconds after a change\n"
     .align 2
 fmt_mono: .asciz "mono %d //Mono input: 0 off (stereo), 1 left input copied to the right (heard and recorded on both channels; R in is ignored), 2 auto: only while nothing is playing into R in\n"
+    .align 2
+fmt_thru: .asciz "thru %d //Organize fully right: 0 stock (selects the last splice), 1 plays the reel through (each splice moves on to the next at its end, as if EOSG were patched into SHIFT)\n"
     .ltorg

@@ -15,18 +15,19 @@ there.
 
 ## The settings
 
-| Key | Values | Default | What it does |
-|---|---|---|---|
-| `tape` | 0, 1 | 1 | SHIFT + S.O.S.: **1** tape mode, **0** classic TLA feedback |
-| `octl` | 0–4 | 1 | SHIFT + Varispeed lock: **1** octaves, **2** octaves + fifths, **3** semitones, **4** your scale from `scal`, **0** off (SHIFT behaves as stock) ([how it works](USING.md#shift--varispeed-scale-lock)) |
-| `scal` | list of 1–11 | 0 (none) | Your scale for `octl 4`: semitones above the root, separated by commas or spaces, e.g. `3,5,7,10` (minor pentatonic). The root and its octaves are always on |
-| `fxsl` | 0, 1, 2 | 1 | SHIFT + Morph: **1** sample-rate reduction, **2** tape warble, **0** off |
-| `mcap` | 0–9 | 3 | Morph limit while tape mode is dubbing: **1–9** = 0.1–0.9, **0** = no limit. Above 5, or 0, can glitch with many Genes + dubbing + SRR |
-| `sldm` | 0, 1 | 0 | Turing mode: **1** on, **0** off ([how to play it](USING.md#turing-mode-sldm-1)) |
-| `tlen` | 1–16 | 8 | Turing mode loop length, in steps |
-| `root` | 0–100 | 50 | Turing mode: chance in % that a step plays the root pitch instead of a chord ratio. `root 100` = no pitch changes |
-| `ingn` | 0–3 | 0 | Input gain (REC held + SHIFT taps). Saved automatically about 3 s after you change it on the module; 0 = stock starting level |
-| `mono` | 0, 1, 2 | 0 | Mono input: **2** auto, copies the left input onto the right only while nothing is playing into R in, so a mono source in L is heard and recorded on both channels and a stereo source stays stereo; **1** always copies L onto R (R in is ignored); **0** stereo, as stock ([details](../modules/mono_in/README.md)) |
+| Key    | Values       | Default  | What it does                                                                                                                                                                                                                                                                                                          |
+| ------ | ------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tape` | 0, 1         | 1        | SHIFT + S.O.S.: **1** tape mode, **0** classic TLA feedback                                                                                                                                                                                                                                                           |
+| `octl` | 0–4          | 1        | SHIFT + Varispeed lock: **1** octaves, **2** octaves + fifths, **3** semitones, **4** your scale from `scal`, **0** off (SHIFT behaves as stock) ([how it works](USING.md#shift--varispeed-scale-lock))                                                                                                               |
+| `scal` | list of 1–11 | 0 (none) | Your scale for `octl 4`: semitones above the root, separated by commas or spaces, e.g. `3,5,7,10` (minor pentatonic). The root and its octaves are always on                                                                                                                                                          |
+| `fxsl` | 0, 1, 2      | 1        | SHIFT + Morph: **1** sample-rate reduction, **2** tape warble, **0** off                                                                                                                                                                                                                                              |
+| `mcap` | 0–9          | 3        | Morph limit while tape mode is dubbing: **1–9** = 0.1–0.9, **0** = no limit. Above 5, or 0, can glitch with many Genes + dubbing + SRR                                                                                                                                                                                |
+| `sldm` | 0, 1         | 0        | Turing mode: **1** on, **0** off ([how to play it](USING.md#turing-mode-sldm-1))                                                                                                                                                                                                                                      |
+| `tlen` | 1–16         | 8        | Turing mode loop length, in steps                                                                                                                                                                                                                                                                                     |
+| `root` | 0–100        | 50       | Turing mode: chance in % that a step plays the root pitch instead of a chord ratio. `root 100` = no pitch changes                                                                                                                                                                                                     |
+| `ingn` | 0–3          | 0        | Input gain (REC held + SHIFT taps). Saved automatically about 3 s after you change it on the module; 0 = stock starting level                                                                                                                                                                                         |
+| `thru` | 0, 1         | 1        | Plays the reel through. With Organize fully clockwise, **1** plays the reel through, moving to the next splice at the end of each one (as if EOSG were patched into SHIFT); **0** stock, loops through the selected splice ([how it works](USING.md#organize-fully-clockwise-play-the-reel-through-thru-1))           |
+| `mono` | 0, 1, 2      | 0        | Mono input: **2** auto, copies the left input onto the right only while nothing is playing into R in, so a mono source in L is heard and recorded on both channels and a stereo source stays stereo; **1** always copies L onto R (R in is ignored); **0** stereo, as stock ([details](../modules/mono_in/README.md)) |
 
 Values out of range are ignored, and the default is used. SHIFT + Slide
 (jitter) has no setting: it's off until you turn it up.
@@ -47,13 +48,14 @@ root 50 //Turing: chance in percent that a step plays the root rather than a cho
 tlen 8 //Turing loop length in steps, 1-16
 ingn 0 //Input gain 0-3 (REC held + SHIFT taps); saved automatically a few seconds after a change
 mono 0 //Mono input: 0 off (stereo), 1 left input copied to the right (heard and recorded on both channels; R in is ignored), 2 auto: only while nothing is playing into R in
+thru 1 //Organize fully right: 0 stock (selects the last splice), 1 plays the reel through (each splice moves on to the next at its end, as if EOSG were patched into SHIFT)
 ```
 
 ## Troubleshooting: the CPU log (`cpul`)
 
-| Key | Values | Default | What it does |
-|---|---|---|---|
-| `cpul` | 0, 1 | 0 | **1** writes CPU statistics to `cpulog.txt` on the card, one line per second |
+| Key    | Values | Default | What it does                                                                 |
+| ------ | ------ | ------- | ---------------------------------------------------------------------------- |
+| `cpul` | 0, 1   | 0       | **1** writes CPU statistics to `cpulog.txt` on the card, one line per second |
 
 **Only turn this on when you're chasing glitches.** It writes to the card
 every 10 seconds, so leave it off for normal use. To use it: set `cpul 1`,

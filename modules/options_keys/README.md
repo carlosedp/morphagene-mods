@@ -6,7 +6,7 @@ take effect.
 ## What it does
 
 Adds `tape`, `octl`, `scal`, `fxsl`, `cpul`, `mcap`, `sldm`, `root`,
-`tlen`, `ingn` and `mono` to `options.txt` (see [docs/OPTIONS.md](../../docs/OPTIONS.md)).
+`tlen`, `ingn`, `mono` and `thru` to `options.txt` (see [docs/OPTIONS.md](../../docs/OPTIONS.md)).
 
 - **Parser hook** (0x08023326): checks our keys before the stock key dispatch.
   On/off keys accept 0 or 1, `octl` 0–4, `fxsl` 0–2 and `mcap` 0–9 (one
@@ -26,6 +26,9 @@ writes the defaults every boot.
 **Scale** (0x2002A604, u16): the `scal` mask, bit *d* = *d* semitones (bits
 1–11). The settings block is full, so it lives here. sd_updater clears it
 every boot.
+
+**thru** (0x2002A606, u8): splice_thru's switch, 0 or 1. sd_updater sets it to
+1 every boot.
 
 ## Input gain (`ingn`)
 

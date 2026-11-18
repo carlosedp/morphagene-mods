@@ -187,6 +187,7 @@ const KEYS = {
   tlen: '//Turing loop length in steps, 1-16',
   ingn: '//Input gain 0-3 (REC held + SHIFT taps); saved automatically a few seconds after a change',
   mono: '//Mono input: 0 off (stereo), 1 left input copied to the right (heard and recorded on both channels; R in is ignored), 2 auto: only while nothing is playing into R in',
+  thru: '//Organize fully right: 0 stock (selects the last splice), 1 plays the reel through (each splice moves on to the next at its end, as if EOSG were patched into SHIFT)',
 };
 const FIELDS = [...Object.keys(KEYS), 'gnsm'];
 const LINE = /^([a-z]{4}) (\d+(?:[, ]+\d+)*)(.*)$/;

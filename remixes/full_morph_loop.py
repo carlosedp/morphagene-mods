@@ -5,6 +5,6 @@ REMIX = dict(
     description='Everything in Full, and Morph fully down plays a seamless loop instead of adding silence '
                 '(stock reaches the loop at about 8 o\'clock).',
     modules=['record_start_splice', 'shift_gestures', 'tape_sos', 'sd_updater', 'options_keys', 'gene_shape',
-             'cpu_meter', 'mono_in', 'vs_deadband', 'morph_loop'],
-    sha256='79a057d3c09b9b3e817ce1a9b65cdc180cad3a96cee3ff240a1e53d61896a44b',
+             'cpu_meter', 'mono_in', 'vs_deadband', 'splice_thru', 'morph_loop'],
+    sha256='df8e9d309e96cc8d14283476c4f29ce78f07bb80551afe8ffa5bd7cbbf096e64',
 )

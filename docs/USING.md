@@ -8,15 +8,16 @@ delete audio. A plain SHIFT tap still moves to the next splice, as stock.
 After a gesture, the knob you turned **holds its old value** until you turn it
 back near where it was (pickup). That way the sound doesn't jump when you let go of SHIFT.
 
-| Gesture | What it does | Setting |
-|---|---|---|
-| SHIFT + S.O.S. | Tape mode or classic TLA feedback | `tape` |
-| SHIFT + Morph | Sample-rate reduction or tape warble | `fxsl` |
-| SHIFT + Varispeed | Lock to octaves, fifths, semitones or your own scale | `octl`, `scal` |
-| SHIFT + Slide | Random Gene start positions (jitter) | always on |
-| SHIFT + Organize / Gene Size / Slide | Turing mode controls | `sldm 1` |
-| REC held + SHIFT taps | Input gain (stock), now remembered | `ingn` |
-| (no gesture) | Mono input: L on both channels | `mono 2` (auto) or `mono 1` |
+| Gesture                              | What it does                                         | Setting                     |
+| ------------------------------------ | ---------------------------------------------------- | --------------------------- |
+| SHIFT + S.O.S.                       | Tape mode or classic TLA feedback                    | `tape`                      |
+| SHIFT + Morph                        | Sample-rate reduction or tape warble                 | `fxsl`                      |
+| SHIFT + Varispeed                    | Lock to octaves, fifths, semitones or your own scale | `octl`, `scal`              |
+| SHIFT + Slide                        | Random Gene start positions (jitter)                 | always on                   |
+| SHIFT + Organize / Gene Size / Slide | Turing mode controls                                 | `sldm 1`                    |
+| REC held + SHIFT taps                | Input gain (stock), now remembered                   | `ingn`                      |
+| (no gesture)                         | Mono input: L on both channels                       | `mono 2` (auto) or `mono 1` |
+| Organize fully clockwise             | Play the whole reel through, splice after splice     | `thru`                      |
 
 Settings are in `options.txt`; see [OPTIONS.md](OPTIONS.md).
 
@@ -26,6 +27,7 @@ The first SHIFT + S.O.S. turn after power-up switches tape mode on. Until then,
 S.O.S. works exactly as stock.
 
 While you overdub an existing splice:
+
 - **A virtual tape head** writes into the Slide / Gene Size window. It moves at
   the Varispeed rate, so it plays backwards in reverse and pauses at zero speed.
 - **SHIFT + S.O.S. sets how much of the old recording stays** with each pass
@@ -55,13 +57,13 @@ up pass by pass. The amount resets at power-up.
 While SHIFT is held, Varispeed snaps to the nearest step of a scale, so you
 can transpose the reel without a CV quantizer. Choose the scale with `octl`:
 
-| `octl` | Steps |
-|---|---|
+| `octl`      | Steps                                     |
+| ----------- | ----------------------------------------- |
 | 1 (default) | Octaves: −2, −1, −½, −¼, stop, ¼, ½, 1, 2 |
-| 2 | Octaves + fifths |
-| 3 | Every semitone |
-| 4 | Your own scale, listed in `scal` |
-| 0 | Off |
+| 2           | Octaves + fifths                          |
+| 3           | Every semitone                            |
+| 4           | Your own scale, listed in `scal`          |
+| 0           | Off                                       |
 
 For `octl 4`, list the semitones above the root that you want, e.g.
 `scal 3,5,7,10` (minor pentatonic) or `scal 2,4,5,7,9,11` (major). The root
@@ -96,13 +98,13 @@ repeats as a pattern.
    new random choice. Fully right is normal randomness (stock).
 4. **New pattern:** SHIFT + Organize fully right, then back to fully left.
 
-| Control | In Turing mode |
-|---|---|
-| SHIFT + Organize | Evolution: fully left = locked, fully right = stock randomness |
-| SHIFT + Gene Size | Genes per step: 1, 2, 3, 4, 6, 8, 12 or 16 |
-| SHIFT + Slide | Spread: start jitter, repeated by each step when locked |
-| `tlen` | Loop length, 1–16 steps (default 8) |
-| `root` | Chance in % that a step plays the root pitch (default 50; `root 100` = no pitch changes) |
+| Control           | In Turing mode                                                                           |
+| ----------------- | ---------------------------------------------------------------------------------------- |
+| SHIFT + Organize  | Evolution: fully left = locked, fully right = stock randomness                           |
+| SHIFT + Gene Size | Genes per step: 1, 2, 3, 4, 6, 8, 12 or 16                                               |
+| SHIFT + Slide     | Spread: start jitter, repeated by each step when locked                                  |
+| `tlen`            | Loop length, 1–16 steps (default 8)                                                      |
+| `root`            | Chance in % that a step plays the root pitch (default 50; `root 100` = no pitch changes) |
 
 Pitches come from the stock chord ratios `mcr1`–`mcr3` in `options.txt`.
 Organize doesn't move the selected splice while SHIFT is held. There's no LED
@@ -129,6 +131,23 @@ back to stereo within a few milliseconds.
 
 `mono 1` copies L onto R all the time and ignores R in. `mono 0` (the
 default) is stereo, as stock.
+
+## Organize fully clockwise: play the reel through (`thru 1`)
+
+Turn Organize all the way clockwise (the top 5% of its travel) and the reel
+plays through: when a splice ends, the next one starts, and after the last
+splice it goes back to the first. It's the same as patching EOSG into the
+SHIFT input, without the cable. Morph control behaves as usual, affecting the playback within each splice (with gap, then no gap, then genes).
+
+- **Turning into the zone** carries on from the splice that's playing.
+- **Turning back down** selects splices as usual. The rest of the knob is
+  stretched a little, so the last splice is still just below the zone.
+- **A plain SHIFT tap** still skips to the next splice at any time.
+- **With Gene Size turned up,** it moves on at the end of each Gene, as the
+  EOSG patch does.
+- **It does nothing in reel mode, while recording, or with only one splice.**
+
+`thru 0` gives stock Organize: fully clockwise selects the last splice.
 
 ## Working in the background
 

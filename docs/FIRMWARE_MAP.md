@@ -63,6 +63,9 @@ The writer prints the stored value back. `gnsm` is read in one place
 | 0x2002215c, 0x2002208c | Splice markers, marker count |
 | 0x20021e0c / 0x20021e08 | Gene fade length (samples) / per-sample envelope step (1/fade). Rewritten every block |
 | 0x20021e64… | Per-Gene arrays (4 slots): envelope, crossmix, elapsed, rate selector, position, length, bounds, phase |
+| 0x20021cbc | Selected splice, 1..count. Organize sets it only when its reading moves more than 8 counts (0x080277b0); navigation request 1 adds 1, wrapping after the last |
+| 0x20021338 | Reel mode (the audio routine keeps a pointer to it in lr) |
+| 0x200220ac / 0x20022080 / 0x200220a0 | Organize reading the selection last used / its calibration minimum / scale (position = (reading − minimum) × scale) |
 | 0x20021de8 | End-of-splice trigger. Set to 4 by the envelope code, counted down by TIM2 to drive the splice LED and the gate |
 
 **Fade 250 means full splice.** With Gene Size fully counter-clockwise, stock
@@ -104,6 +107,7 @@ every boot), then +4 `tape`, +5 `octl`, +6 `fxsl`, +7 `mono`, +8 `cpul`,
 - 0x2002A100..0x2002A5FF: the tape engine, copied to SRAM.
 - 0x2002A600..0x2002A603: options_keys, block count when a new input gain was first seen.
 - 0x2002A604..0x2002A605: options_keys, `scal` mask (bit *d* = *d* semitones), cleared by sd_updater every boot.
+- 0x2002A606: options_keys, `thru` (splice_thru), set to 1 by sd_updater every boot.
 - 0x2002A700..0x2002A73F: tape_sos warble state.
 - 0x2002A740..0x2002A7FF: gene_shape Turing state.
 - 0x2002B000..0x2002B7FF: the SD updater's FatFs objects and flasher.

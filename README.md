@@ -59,6 +59,7 @@ the same way. The mods never touch the bootloader.
 | Faster flash access (more CPU headroom) | always on | tried on hardware |
 | CPU log for troubleshooting | `cpul 1` | tried on hardware |
 | Mono input: L heard and recorded on both channels | `mono 2` (auto, while R is unplugged) or `mono 1` (always) | tried on hardware ([details](modules/mono_in/README.md)) |
+| Play the whole reel through, splice after splice | Organize fully clockwise (`thru 1`, default) | tried on hardware ([details](modules/splice_thru/README.md)) |
 | Overdub stays inside the selected splice | automatic (a fix) | built into every image; not tested on its own |
 | Wider Varispeed zones at 1× and −1× (green LED) | automatic | on hardware at 5% (measured); 7% emulated ([details](modules/vs_deadband/README.md)) |
 | Morph fully down plays a seamless loop | *Full + Morph loop* build only | on hardware ([details](modules/morph_loop/README.md)) |

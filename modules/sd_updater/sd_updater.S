@@ -94,6 +94,9 @@ upd_hook:
     str     r1, [r0]
     ldr     r0, =0x2002A740             @ Turing state (gene_shape): defaults
     str     r1, [r0]                    @ (new seeds, evolution 1) after any reset
+    ldr     r0, =0x2002A606             @ thru 1 (options_keys, splice_thru)
+    movs    r1, #1
+    strb    r1, [r0]
     MARK    m_hook
     ldr     r0, =SHIFT_GPIO
     ldr     r0, [r0]
