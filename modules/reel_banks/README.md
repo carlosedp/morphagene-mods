@@ -1,6 +1,6 @@
 # reel_banks
 
-**Status:** emulated. The hold was tried on hardware once (see the end).
+**Status:** tried on hardware.
 
 ## What it does
 
@@ -146,4 +146,5 @@ compaction stubbed:
 
 **Hardware:** the first build stepped banks about twice a second, because the
 time counter runs at 96,000 ticks a second, not 48,000 (the audio loop adds 2
-per frame). The constants are doubled since; the rest is not yet confirmed.
+per frame). With the constants doubled, it works on the module: 3 s to the
+first step, then one bank a second, and banks switch as described.
