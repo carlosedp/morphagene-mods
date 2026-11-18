@@ -139,6 +139,9 @@ These need nothing from you:
 - **Overdub stays in its splice.** A fix: with playback stopped and another
   splice selected, stock could start an overdub outside the selected splice.
   Now it stays inside it.
+- **Easier to find original speed.** The Varispeed zones at 1× and −1× (green
+  LED) are about fourteen times wider than stock, about 20° of the knob each. The
+  rest of the knob is squeezed very slightly, so every speed is still there.
 - **Faster flash access.** The firmware runs with the processor's flash
   prefetch on, which gives the CPU 10–17% more headroom per audio block, so
   high-Morph patches glitch less.

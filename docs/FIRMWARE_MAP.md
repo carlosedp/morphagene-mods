@@ -58,6 +58,7 @@ The writer prints the stored value back. `gnsm` is read in one place
 | 0x200012e0 | Navigation request (SHIFT release → next splice) |
 | 0x20001020 | SHIFT state machine state (14 = SHIFT held) |
 | 0x200220e8 / 0x200220e0 | Varispeed target rate / glided rate used per sample |
+| s18 at 0x0802787c | Calibrated Varispeed *x*, 0..1. With `vsop` 0/1, the rate is table[(trunc(400*x*) & ~1) − 200] forward or −table[196 − (… & ~1)] reverse (`& ~3` for `vsop 1`); table at 0x080462b0, 2^((i − 144)/48). The LED is green only at exactly ±1.0. vs_deadband remaps *x* at 0x0802acde |
 | 0x20022154 | Slide (0..1, smoothed per sample) |
 | 0x2002215c, 0x2002208c | Splice markers, marker count |
 | 0x20021e0c / 0x20021e08 | Gene fade length (samples) / per-sample envelope step (1/fade). Rewritten every block |
