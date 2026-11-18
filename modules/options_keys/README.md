@@ -6,7 +6,7 @@ take effect.
 ## What it does
 
 Adds `tape`, `octl`, `scal`, `fxsl`, `cpul`, `mcap`, `sldm`, `root`,
-`tlen`, `ingn`, `mono` and `thru` to `options.txt` (see [docs/OPTIONS.md](../../docs/OPTIONS.md)).
+`tlen`, `ingn`, `mono`, `thru` and `bank` to `options.txt` (see [docs/OPTIONS.md](../../docs/OPTIONS.md)).
 
 - **Parser hook** (0x08023326): checks our keys before the stock key dispatch.
   On/off keys accept 0 or 1, `octl` 0–4, `fxsl` 0–2 and `mcap` 0–9 (one
@@ -29,6 +29,10 @@ every boot.
 
 **thru** (0x2002A606, u8): splice_thru's switch, 0 or 1. sd_updater sets it to
 1 every boot.
+
+**bank** (0x2002A607, u8): reel_banks' bank, 1 to 8 (0 and 9 are ignored).
+sd_updater sets it to 1 every boot. Without the settings magic the writer
+prints 1.
 
 ## Input gain (`ingn`)
 

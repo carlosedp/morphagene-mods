@@ -27,6 +27,7 @@ there.
 | `root` | 0–100        | 50       | Turing mode: chance in % that a step plays the root pitch instead of a chord ratio. `root 100` = no pitch changes                                                                                                                                                                                                     |
 | `ingn` | 0–3          | 0        | Input gain (REC held + SHIFT taps). Saved automatically about 3 s after you change it on the module; 0 = stock starting level                                                                                                                                                                                         |
 | `thru` | 0, 1         | 1        | Plays the reel through. With Organize fully clockwise, **1** plays the reel through, moving to the next splice at the end of each one (as if EOSG were patched into SHIFT); **0** stock, loops through the selected splice ([how it works](USING.md#organize-fully-clockwise-play-the-reel-through-thru-1))           |
+| `bank` | 1–8          | 1        | Reel bank: **1** the card's root (stock), **2–8** the folders `bank2`–`bank8`, 32 reels each, created when first chosen. SPLICE + REC held 3 s also changes it, and saves it here ([how it works](USING.md#reel-banks-splice--rec-held-3-s-bank))                                                                     |
 | `mono` | 0, 1, 2      | 0        | Mono input: **2** auto, copies the left input onto the right only while nothing is playing into R in, so a mono source in L is heard and recorded on both channels and a stereo source stays stereo; **1** always copies L onto R (R in is ignored); **0** stereo, as stock ([details](../modules/mono_in/README.md)) |
 
 Values out of range are ignored, and the default is used. SHIFT + Slide
@@ -49,6 +50,7 @@ tlen 8 //Turing loop length in steps, 1-16
 ingn 0 //Input gain 0-3 (REC held + SHIFT taps); saved automatically a few seconds after a change
 mono 0 //Mono input: 0 off (stereo), 1 left input copied to the right (heard and recorded on both channels; R in is ignored), 2 auto: only while nothing is playing into R in
 thru 1 //Organize fully right: 0 stock (selects the last splice), 1 plays the reel through (each splice moves on to the next at its end, as if EOSG were patched into SHIFT)
+bank 1 //Reel bank: 1 is the card's root (stock), 2-8 are the folders bank2 to bank8, 32 reels each. Hold SPLICE + REC to open reel mode and keep holding: after 3 s the bank steps once a second (the reel window shows its colour)
 ```
 
 ## Troubleshooting: the CPU log (`cpul`)

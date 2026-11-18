@@ -18,6 +18,7 @@ back near where it was (pickup). That way the sound doesn't jump when you let go
 | REC held + SHIFT taps                | Input gain (stock), now remembered                   | `ingn`                      |
 | (no gesture)                         | Mono input: L on both channels                       | `mono 2` (auto) or `mono 1` |
 | Organize fully clockwise             | Play the whole reel through, splice after splice     | `thru`                      |
+| SPLICE + REC held 3 s                | Next reel bank (8 banks of 32 reels)                 | `bank`                      |
 
 Settings are in `options.txt`; see [OPTIONS.md](OPTIONS.md).
 
@@ -148,6 +149,36 @@ SHIFT input, without the cable. Morph control behaves as usual, affecting the pl
 - **It does nothing in reel mode, while recording, or with only one splice.**
 
 `thru 0` gives stock Organize: fully clockwise selects the last splice.
+
+## Reel banks: SPLICE + REC held 3 s (`bank`)
+
+The card holds 8 banks of up to 32 reels each. Bank 1 is the card's root, where
+stock keeps its reels, so nothing changes until you pick another bank. Banks 2
+to 8 are the folders `bank2` to `bank8`. A missing folder is created the first
+time you choose its bank.
+
+**To change bank:**
+
+1. Hold SPLICE, then REC, as you would to enter reel mode. Reel mode opens.
+2. Keep holding. After 3 s the reel window shows the next bank's colour, then
+   moves one bank further each second (after bank 8 comes bank 1). Color sequence follows the same order as the reel colours as shown in the manual.
+3. Let go on the bank you want. Its colour stays for a moment.
+4. Pick a reel with Organize and load it with SPLICE + REC, as stock.
+
+| Bank        | 1               | 2        | 3        | 4        | 5        | 6        | 7        | 8        |
+| ----------- | --------------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| Reel window | reel 1's colour | reel 2's | reel 3's | reel 4's | reel 5's | reel 6's | reel 7's | reel 8's |
+
+- **The bank is saved** in `options.txt` (`bank 1` to `bank 8`), so the
+  module starts in it next time. You can also set it there.
+- **The reel that was playing keeps playing** until you load one from the new
+  bank.
+- **An empty bank** works like an empty card: the first reel is `mg1.wav` in
+  its folder.
+- **Inside a bank, reels work as stock:** new reel, delete reel, compaction,
+  each in that folder only.
+- **You can fill a bank on a computer:** copy `mg1.wav`, `mg2.wav` … into
+  `bank2`, and so on. Numbering follows stock: `mg1`–`mg9`, then `mga`–`mgw`.
 
 ## Working in the background
 

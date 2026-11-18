@@ -97,6 +97,7 @@ upd_hook:
     ldr     r0, =0x2002A606             @ thru 1 (options_keys, splice_thru)
     movs    r1, #1
     strb    r1, [r0]
+    strb    r1, [r0, #1]                @ bank 1 at 0x2002A607 (reel_banks)
     MARK    m_hook
     ldr     r0, =SHIFT_GPIO
     ldr     r0, [r0]

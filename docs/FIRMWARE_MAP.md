@@ -66,6 +66,12 @@ The writer prints the stored value back. `gnsm` is read in one place
 | 0x20021cbc | Selected splice, 1..count. Organize sets it only when its reading moves more than 8 counts (0x080277b0); navigation request 1 adds 1, wrapping after the last |
 | 0x20021338 | Reel mode (the audio routine keeps a pointer to it in lr) |
 | 0x200220ac / 0x20022080 / 0x200220a0 | Organize reading the selection last used / its calibration minimum / scale (position = (reading − minimum) × scale) |
+| 0x20001040 / 0x200012a0 / 0x2000128c | Reel index (1000 = new reel) / reel count / maximum reels (32) |
+| 0x08021f74 | `reel_name(out, n)`: "mg" + '0'+n or 'a'+n−10 + ".wav" in 32 zeroed bytes. With the literal "mg1.wav" at the boot check (0x080236d4) it makes every reel file name; reel_banks prefixes both |
+| 0x20022074 | Main-loop requests: 0x1000 load reel 0x20001040, 0x800 compact and recount, 0x80 rewrite `options.txt` |
+| 0x20001024 | SHIFT/REC/SPLICE state machine time stamp. States: 8 SPLICE held; 16 reel mode entered (SPLICE, then REC for 62.5 ms); 17 waiting for release; 18 reel mode; 19 reel mode exit |
+| 0x20021c88 | Time, 96,000 ticks a second: the audio loop adds 2 per 48 kHz frame at 0x0802a284 (3 s = 288,000; TIM2 holds it in lr). Measured on hardware through reel_banks |
+| 0x20001038 / 0x2000103c | Reel window / splice window colour code: reel index & 7 / selected splice & 7 |
 | 0x20021de8 | End-of-splice trigger. Set to 4 by the envelope code, counted down by TIM2 to drive the splice LED and the gate |
 
 **Fade 250 means full splice.** With Gene Size fully counter-clockwise, stock
@@ -108,6 +114,9 @@ every boot), then +4 `tape`, +5 `octl`, +6 `fxsl`, +7 `mono`, +8 `cpul`,
 - 0x2002A600..0x2002A603: options_keys, block count when a new input gain was first seen.
 - 0x2002A604..0x2002A605: options_keys, `scal` mask (bit *d* = *d* semitones), cleared by sd_updater every boot.
 - 0x2002A606: options_keys, `thru` (splice_thru), set to 1 by sd_updater every boot.
+- 0x2002A607: options_keys, `bank` (reel_banks, 1-8), set to 1 by sd_updater every boot.
+- 0x2002A608..0x2002A60F: mono_in, auto mode state.
+- 0x2002A610..0x2002A63F: reel_banks, gesture state and a 32-byte file name buffer.
 - 0x2002A700..0x2002A73F: tape_sos warble state.
 - 0x2002A740..0x2002A7FF: gene_shape Turing state.
 - 0x2002B000..0x2002B7FF: the SD updater's FatFs objects and flasher.
@@ -126,6 +135,7 @@ every boot), then +4 `tape`, +5 `octl`, +6 `fxsl`, +7 `mono`, +8 `cpul`,
 | `f_close` | 0x080327a8 |
 | `f_lseek` | 0x08032be8 |
 | `f_stat` | 0x08033128 |
+| `f_mkdir` (never called by stock) | 0x080334d4 |
 | `f_rename` | 0x08033848 |
 | `f_gets` | 0x0803449c |
 | `f_printf` | 0x08034804 |
